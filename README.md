@@ -64,6 +64,24 @@ spring.security:
           issuer-uri: "http://localhost:9090/auth/realms/local"
 ```
 
+## Tips for dealing with kafka
+
+### Create a topic
+
+within the running container
+
+```sh
+/opt/kafka_2.13-2.6.0/bin 
+./kafka-topics.sh --topic trades --create --zookeeper localhost --partitions 1 --replication-factor 1
+```
+
+### Send a message
+
+```sh
+/opt/kafka_2.13-2.6.0/bin 
+./kafka-console-producer.sh --broker-list localhost:9092 --topic trades --property parse.key=true --property key.separator=":"
+```
+
 ## About the image
 
 The image is based on available container images. Namely:
