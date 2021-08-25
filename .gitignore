@@ -1,0 +1,22 @@
+# IDE files
+target/
+bin/
+tmp/
+.settings/
+.classpath
+.metadata
+.project
+.idea
+*.iml
+.vscode/
+
+# Log file
+*.log
+
+# Package Files #
+*.zip
+*.tar.gz
+*.rar
+
+# OS
+.DS_Store
