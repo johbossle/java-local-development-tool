@@ -89,4 +89,6 @@ The image is based on available container images. Namely:
 - johnnypark/kafka-zookeeper:2.6.0 (<https://github.com/hey-johnnypark/docker-kafka-zookeeper>)
 - jboss/keycloak:13.0.1 (<https://github.com/keycloak/keycloak-containers>)
 
-The license of the used images and their contained programs are untouched.
+It also contains mongodb in version 4.0.5 Community from the alpine linux community repository <http://dl-cdn.alpinelinux.org/alpine/v3.9/community>.
+
+The license of the used images and their contained programs remain untouched.
