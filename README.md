@@ -11,7 +11,7 @@ The running container is intended for easing up local development of java stacks
 ## Building the container image
 
 ```sh
-docker build -t java-ld-tool:latest
+docker build -t java-ld-tool:latest .
 ```
 
 ## Starting an ephemeral container
