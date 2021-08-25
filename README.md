@@ -1,4 +1,4 @@
-# knowis-maven
+# Java Local Development Tool
 
 This is a simple container image to get one container running
 
