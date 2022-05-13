@@ -14,6 +14,8 @@ The running container is intended for easing up local development of java stacks
 docker build -t java-ld-tool:latest .
 ```
 
+Attention: Please ensure to use LF as line-ending on Windows machines.
+
 ## Starting an ephemeral container
 
 ```sh
@@ -51,6 +53,35 @@ de.knowis.cp.binding.topic:
       topicName: TOPICNAME
       kafkaBinding:
         kafka_brokers_sasl: "localhost:9092"
+
+## alternative 1
+#de.knowis.cp.binding.topic:
+#  topicBindings:
+#    products-events:
+#      topicName: "pizza.express.dev.products.events"
+#      kafkaBinding: "local"
+#    notifications-events:
+#      topicName: "pizza.express.dev.notifications.events"
+#      kafkaBinding: "local"
+#  kafkaBindings:
+#    local:
+#      kafka_brokers_sasl: "localhost:9092"
+#      securityProtocol: "PLAINTEXT"
+
+## alternative 2
+#de.knowis.cp:
+#  binding.topic:
+#    topicBindings:
+#      BINDINGNAME:
+#        topicName: TOPICNAME
+#        kafkaBinding:
+#          kafka_brokers_sasl: "localhost:9092"
+#          securityProtocol: "PLAINTEXT"
+#  consumer.kafka.binding:
+#    kafka_brokers_sasl: "localhost:9092"
+#    user: "u"
+#    password: "p"
+#    securityProtocol: "PLAINTEXT"
 
 # Spring Security OAuth2  config
 spring.security:
