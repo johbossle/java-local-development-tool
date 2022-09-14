@@ -1,5 +1,5 @@
 FROM johnnypark/kafka-zookeeper:2.6.0 as kafka
-FROM jboss/keycloak:13.0.1 as keycloak
+FROM keycloak/keycloak:18.0.0 as keycloak
 
 FROM alpine:latest
 
@@ -9,17 +9,17 @@ COPY --from=kafka /opt /opt
 COPY --from=kafka /etc/supervisor.d/kafka.ini /etc/supervisor.d/kafka.ini
 COPY --from=kafka /etc/supervisor.d/zookeeper.ini /etc/supervisor.d/zookeeper.ini
 
-COPY --from=keycloak /opt/jboss /opt/jboss
+COPY --from=keycloak /opt/keycloak /opt/keycloak
 
 RUN apk add --update supervisor openjdk11 bash gcompat gzip openssl tar which curl
-COPY adoptions/realm-export.json /tmp/realm-export.json
-COPY adoptions/keycloak-entrypoint.sh /tmp/keycloak-entrypoint.sh
-
 ### MongoDB
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/main' >> /etc/apk/repositories &&\
   echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repositories &&\
   apk update &&\
   apk add mongodb yaml-cpp=0.6.2-r2
+
+COPY adoptions/realm-export.json /opt/keycloak/data/import/realm-export.json
+COPY adoptions/keycloak-entrypoint.sh /tmp/keycloak-entrypoint.sh
 
 COPY supervisord/keycloak.ini /etc/supervisor.d/keycloak.ini
 COPY supervisord/mongo.ini /etc/supervisor.d/mongo.ini
@@ -38,9 +38,8 @@ ENV NUM_PARTITIONS 10
 
 ENV KEYCLOAK_HOSTNAME localhost
 ENV BIND localhost
-ENV KEYCLOAK_USER admin
-ENV KEYCLOAK_PASSWORD admin
-ENV KEYCLOAK_IMPORT "/tmp/realm-export.json"
+ENV KEYCLOAK_ADMIN admin
+ENV KEYCLOAK_ADMIN_PASSWORD admin
 
 # 2181 is zookeeper, 9092 is kafka
 EXPOSE 2181 9092
