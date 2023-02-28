@@ -33,7 +33,7 @@ docker run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p 9090:8080 --name java-ld-
 - mongodb running at port 27001 without username/password (connection string: `"mongodb://localhost:27017/?"`)
 - keycloak oidc provider
   - admin console: <http://localhost:9090> (username: `admin`, password: `admin`)
-  - realm `local` with a client called `local-debugging-app`; issuer: `http://localhost:9090/auth/realms/local`
+  - realm `local` with a client called `local-debugging-app`; issuer: `http://localhost:9090/realms/local`
   - user within the realm: username: `admin`, password: `admin`)
 - kafka with one broker available at `localhost:9092` (no security)
 
@@ -92,7 +92,7 @@ spring.security:
           client-id: "local-debugging-app"
       provider:
         default:
-          issuer-uri: "http://localhost:9090/auth/realms/local"
+          issuer-uri: "http://localhost:9090/realms/local"
 ```
 
 ## Tips for dealing with kafka
