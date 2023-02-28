@@ -113,6 +113,23 @@ within the running container
 ./kafka-console-producer.sh --broker-list localhost:9092 --topic trades --property parse.key=true --property key.separator=":"
 ```
 
+## Tips for using this image with windows machines
+
+### Linebreaks
+
+If keycloak is not starting correctly, it might be related to incorrect linebreaks. Please ensure, that you are using LF as line-ending throughout all files in the project. After the checkout sometimes they were re-written to the Windows default.
+
+### Ports
+
+If you have problems connecting from your local machine to any of the provided services (e.g. kafka: 'topic xyz not present in metadata', altough you created it successfully), make sure that Windows is not blocking any of the required ports:
+
+- run `netstat -a -b` in administrator mode
+- check if any of the following necessary ports are blocked by windows services
+  - 2181 --> zookeper
+  - 9092 --> kafka
+  - 8080 --> keycloak
+  - 27017 --> MongoDB
+
 ## About the image
 
 The image is based on available container images. Namely:
