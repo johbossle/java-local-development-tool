@@ -9,6 +9,16 @@ This is a simple container image to get one container running
 
 The running container is intended for easing up local development of java stacks.
 
+## TL;DR;
+
+- clone the project `git clone `
+- run the docker build command `docker build -t java-ld-tool:latest .`
+- start the container `docker run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --rm java-ld-tool:latest`
+- In your service
+  - create a file `application-local.yaml`
+  - copy over the example configuration (see below)
+  - start the service with spring profile local `SPRING_PROFILES_ACTIVE=local`
+
 ## Building the container image
 
 ```sh
