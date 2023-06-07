@@ -1,5 +1,6 @@
 FROM johnnypark/kafka-zookeeper:2.6.0 as kafka
 FROM keycloak/keycloak:18.0.0 as keycloak
+FROM apicurio/apicurio-registry-mem:2.1.5.Final as apicurio
 
 FROM alpine:latest
 
@@ -25,6 +26,10 @@ COPY supervisord/keycloak.ini /etc/supervisor.d/keycloak.ini
 COPY supervisord/mongo.ini /etc/supervisor.d/mongo.ini
 RUN chmod a+x /tmp/keycloak-entrypoint.sh && mkdir -p /data/db
 
+COPY --from=apicurio /deployments /apicurio
+COPY adoptions/apicurio-entrypoint.sh /tmp/apicurio-entrypoint.sh
+COPY supervisord/apicurio.ini /etc/supervisor.d/apicurio.ini
+
 ### Configs
 
 ENV ZOOKEEPER_VERSION 3.4.13
@@ -47,6 +52,8 @@ EXPOSE 2181 9092
 EXPOSE 8080
 # MongoDB
 EXPOSE 27017
+# Apicurio
+EXPOSE 8081
 
 ENTRYPOINT [ "supervisord" ]
 CMD ["-n"]
