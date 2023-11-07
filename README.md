@@ -13,7 +13,7 @@ The running container is intended for easing up local development of java stacks
 
 - clone the project `git clone `
 - run the container build command `podman build -t java-ld-tool:latest .`
-- start the container `podman run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --rm java-ld-tool:latest`
+- start the container `podman run -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --rm java-ld-tool:latest`
 - In your service
   - create a file `application-local.yaml`
   - copy over the example configuration (see below)
@@ -36,7 +36,7 @@ podman run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --r
 ## Starting a named container
 
 ```sh
-podman run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --name java-ld-tool java-ld-tool:latest
+podman run -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --name java-ld-tool java-ld-tool:latest
 ```
 
 ## The services of this container
@@ -145,15 +145,13 @@ k5.sdk:
 within the running container
 
 ```sh
-/opt/kafka_2.13-2.6.0/bin 
-./kafka-topics.sh --topic trades --create --zookeeper localhost --partitions 1 --replication-factor 1
+/opt/kafka_2.13-3.6.0/bin/kafka-topics.sh --topic trades --create --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
 ```
 
 ### Send a message
 
 ```sh
-/opt/kafka_2.13-2.6.0/bin 
-./kafka-console-producer.sh --broker-list localhost:9092 --topic trades --property parse.key=true --property key.separator=":"
+/opt/kafka_2.13-3.6.0/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mytopic2 --property parse.key=true --property key.separator=":"
 ```
 
 ## Tips for using this image with windows machines
@@ -168,7 +166,6 @@ If you have problems connecting from your local machine to any of the provided s
 
 - run `netstat -a -b` in administrator mode
 - check if any of the following necessary ports are blocked by windows services
-  - 2181 --> zookeper
   - 9092 --> kafka
   - 9090 --> keycloak
   - 8081 --> apicurio
@@ -178,10 +175,9 @@ If you have problems connecting from your local machine to any of the provided s
 
 The image is based on available container images. Namely:
 
-- johnnypark/kafka-zookeeper:2.6.0 (<https://github.com/hey-johnnypark/docker-kafka-zookeeper>)
 - keycloak/keycloak:22.0.5 (<https://github.com/keycloak/keycloak-containers>)
 - apicurio/apicurio-registry-mem:2.4.14.Final (<https://github.com/Apicurio/apicurio-registry>)
 
-It also contains mongodb in version 4.0.5 Community from the alpine linux community repository <http://dl-cdn.alpinelinux.org/alpine/v3.9/community>.
+It also contains mongodb in version 4.0.5 Community from the alpine linux community repository <http://dl-cdn.alpinelinux.org/alpine/v3.9/community> and an installation of apache kafka with KRaft (without zookeeper).
 
 The license of the used images and their contained programs remain untouched.
