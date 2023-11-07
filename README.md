@@ -54,42 +54,25 @@ podman run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --n
 ```yaml
 spring:
   config:
-     activate:
-       on-profile: local
+    activate:
+      on-profile: local
 
-# MongoDB configuration from local configuration file
-spring.data.mongodb:
-  uri: "mongodb://localhost:27017/?"
-  database: "mydatabase"
+  data:
+    # Mongo DB configuration
+    mongodb:
+      uri: "mongodb://localhost:27017/?"
+      database: "mydatabase"
 
 # Spring Security OAuth2  config
-spring.security:
-  oauth2:
-    client:
-      registration:
-        default:
-          client-id: "local-debugging-app"
-      provider:
-        default:
-          issuer-uri: "http://localhost:9090/realms/local"
-
-de.knowis.schema-registry:
-  schemaRegistryConfig:
-    schemaRegistryUrl: "http://localhost:8081"
-    schemaRegistrySecurityEnabled: "false"
-
-# Topic Binding(s) & Kafka Binding(s) local configurations
-de.knowis.cp.binding.topic:
-  topicBindings:
-    my-topic-binding-alias:
-      topicName: "YourTopicNameHere"
-      kafkaBinding: "k5-default-kafka-binding-example"
-  kafkaBindings:
-    k5-default-kafka-binding-example:
-      kafka_brokers_sasl: "localhost:9092"
-      user: "u"
-      password: "p"
-      securityProtocol: "PLAINTEXT"
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: "local-debugging-app"
+        provider:
+          default:
+            issuer-uri: "http://localhost:9090/realms/local"
 
 springdoc:
   swagger-ui:
@@ -113,30 +96,46 @@ feature:
   webmvc:
     enabled: true
 
-de:
-  knowis:
-    cp:
-      consumer:
-        kubernetes:
-          namespace: "dev-br"
-      oidc:
-        clientRegistrationId: "local-debugging-app"
+k5.sdk:
+  consumer:
+    kubernetes:
+      namespace: "dev-br"
+  oidc:
+    clientRegistrationId: "default"
+  # Schema Registry configuration
+  schema-registry:
+    schemaRegistryConfig:
+      schemaRegistryUrl: "http://localhost:8081"
+      schemaRegistrySecurityEnabled: "false"
+  
+  springboot: 
+    #Component configuration
+    deployment.identifier: ""
+    server.baseurl: "http://localhost:8080"
 
-#Component configuration
-de.knowis.cp.deployment.identifier: ""
-de.knowis.cp.server.baseurl: "http://localhost:8080"
-
-#Api Binding from local configuration
-de.cp.consumer.api.binding:
- bindingProperties:
-    binding1 :
-      url: <binding-url>
-      k5PropagateSecurityToken: true
-      caCert: ""
-    binding2:
-      url: <binding-url>
-      k5PropagateSecurityToken: true
-      caCert: ""
+    # Topic Binding(s) & Kafka Binding(s) local configurations
+    binding.topic:
+      topicBindings:
+        my-topic-binding-alias:
+          topicName: "YourTopicNameHere"
+          kafkaBinding: "k5-default-kafka-binding-example"
+      kafkaBindings:
+        k5-default-kafka-binding-example:
+          kafka_brokers_sasl: "localhost:9092"
+          user: "u"
+          password: "p"
+          securityProtocol: "PLAINTEXT"
+    #Api Binding from local configuration
+#    consumer.api.binding:
+#      bindingProperties:
+#        binding1:
+#          url: <binding-url>
+#          k5PropagateSecurityToken: true
+#          caCert: ""
+#        binding2:
+#          url: <binding-url>
+#          k5PropagateSecurityToken: true
+#          caCert: ""
 ```
 
 ## Tips for dealing with kafka
