@@ -12,8 +12,8 @@ The running container is intended for easing up local development of java stacks
 ## TL;DR;
 
 - clone the project `git clone `
-- run the docker build command `docker build -t java-ld-tool:latest .`
-- start the container `docker run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --rm java-ld-tool:latest`
+- run the container build command `podman build -t java-ld-tool:latest .`
+- start the container `podman run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --rm java-ld-tool:latest`
 - In your service
   - create a file `application-local.yaml`
   - copy over the example configuration (see below)
@@ -22,7 +22,7 @@ The running container is intended for easing up local development of java stacks
 ## Building the container image
 
 ```sh
-docker build -t java-ld-tool:latest .
+podman build -t java-ld-tool:latest .
 ```
 
 Attention: Please ensure to use LF as line-ending on Windows machines.
@@ -30,13 +30,13 @@ Attention: Please ensure to use LF as line-ending on Windows machines.
 ## Starting an ephemeral container
 
 ```sh
-docker run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --rm java-ld-tool:latest
+podman run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --rm java-ld-tool:latest
 ```
 
 ## Starting a named container
 
 ```sh
-docker run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --name java-ld-tool java-ld-tool:latest
+podman run -p 2181:2181 -p 9092:9092 -p 27017:27017 -p8081:8081 -p 9090:8080 --name java-ld-tool java-ld-tool:latest
 ```
 
 ## The services of this container
