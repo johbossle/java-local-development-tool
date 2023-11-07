@@ -180,8 +180,8 @@ If you have problems connecting from your local machine to any of the provided s
 The image is based on available container images. Namely:
 
 - johnnypark/kafka-zookeeper:2.6.0 (<https://github.com/hey-johnnypark/docker-kafka-zookeeper>)
-- keycloak/keycloak:18.0.0 (<https://github.com/keycloak/keycloak-containers>)
-- apicurio/apicurio-registry-mem:2.1.5.Final (<https://github.com/Apicurio/apicurio-registry>)
+- keycloak/keycloak:22.0.5 (<https://github.com/keycloak/keycloak-containers>)
+- apicurio/apicurio-registry-mem:2.4.14.Final (<https://github.com/Apicurio/apicurio-registry>)
 
 It also contains mongodb in version 4.0.5 Community from the alpine linux community repository <http://dl-cdn.alpinelinux.org/alpine/v3.9/community>.
 
